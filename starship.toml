@@ -1,0 +1,231 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+command_timeout=1000
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """$os$sudo$username$hostname$directory$git_branch$git_commit$git_state$git_status\
+$fill\
+$jobs$status$cmd_duration\
+$python$battery${custom.disk-linux}$memory_usage$time
+$character"""
+
+
+[fill]
+symbol= " "
+# Username settings
+[username]
+show_always = false
+style_root = "bold red"
+style_user = "bold yellow"
+format = "[$user]($style) "
+#disabled = false
+
+# Hostname settings
+[hostname]
+ssh_only = true
+format =  "on [$hostname](bold red)"
+trim_at = ".companyname.com"
+disabled = false
+
+[character]
+success_symbol = "[❯](#ff9400)"
+error_symbol = "[✗](#ff4b00)"
+vimcmd_symbol = '[V](bold green) '
+# Add these lines for transient prompt
+format = "$symbol"
+vimcmd_replace_one_symbol = "[❮](bold purple)"
+vimcmd_replace_symbol = "[❮](bold purple)"
+vimcmd_visual_symbol = "[❮](bold yellow)"
+
+[os]
+format = '(fg:current_line)(fg:red)[$symbol ](fg:primary bg:red)(fg:red)'
+disabled = false
+
+# This is the default symbols table.
+[os.symbols]
+AIX = "➿ "
+Alpaquita = "🔔 "
+AlmaLinux = "💠 "
+Alpine = "🏔️ "
+Amazon = "🙂 "
+Android = "🤖 "
+Arch = "🎗️ "
+Artix = "🎗️ "
+CachyOS = "🎗️ "
+CentOS = "💠 "
+Debian = "🌀 "
+DragonFly = "🐉 "
+Emscripten = "🔗 "
+EndeavourOS = "🚀 "
+Fedora = "🎩 "
+FreeBSD = "😈 "
+Garuda = "🦅 "
+Gentoo = "🗜️ "
+HardenedBSD = "🛡️ "
+Illumos = "🐦 "
+Kali = "🐉 "
+Linux = "🐧 "
+Mabox = "📦 "
+Macos = "🍎 "
+Manjaro = "🥭 "
+Mariner = "🌊 "
+MidnightBSD = "🌘 "
+Mint = "🌿 "
+NetBSD = "🚩 "
+NixOS = "❄️ "
+Nobara = "🎩 "
+OpenBSD = "🐡 "
+OpenCloudOS = "☁️ "
+openEuler = "🦉 "
+openSUSE = "🦎 "
+OracleLinux = "🦴 "
+Pop = "🍭 "
+Raspbian = "🍓 "
+Redhat = "🎩 "
+RedHatEnterprise = "🎩 "
+RockyLinux = "💠 "
+Redox = "🧪 "
+Solus = "⛵ "
+SUSE = "🦎 "
+Ubuntu = "🎯 "
+Ultramarine = "🔷 "
+Unknown = "❓ "
+Uos = "🐲 "
+Void = "  "
+Windows = "🪟 "
+
+[directory]
+#format = '[$path]($style)( $read_only) '
+truncation_symbol = "…/"
+#format = "[$read_only]($read_only_style)[$path]($style) "
+format = "[](fg:bold black bg:#c05303)[$path[$read_only](bg:$style fg:bold black)](bg:$style fg:bold black)[](fg:$style)"
+style = "#c05303"
+home_symbol = "~"
+truncation_length = 3
+fish_style_pwd_dir_length= 2
+truncate_to_repo = true
+read_only = '🔒' # will replace read_only_symbol in next release
+read_only_style = 'red'
+
+# Battery information
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡️"
+discharging_symbol = "💀"
+
+    [[battery.display]]
+	threshold = 10
+	style = "bold fg:red"
+
+	[[battery.display]]
+	threshold = 30
+	style = "fg:#ff8800"
+
+	[[battery.display]]
+	threshold = 50
+	style = "fg:yellow"
+
+
+[git_status]
+style = "#d8712c"
+format = "(\b[ ](bg:$style fg:black)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind[](fg:$style))"
+conflicted = "[ ](black fg:88 bg:#d8712c)[  ${count} ](fg:black bg:#d8712c bold)"
+staged = "[ $count ](fg:black bg:#d8712c bold)"
+modified = "[✱${count} ](fg:black bg:#d8712c bold)"
+renamed = "[ ${count} ](fg:black bg:#d8712c bold)"
+deleted = "[ ${count} ](fg:black bg:#d8712c bold)"
+untracked = "[?${count} ](fg:black bg:#d8712c bold)"
+stashed = "[ ${count} ](fg:black bg:#d8712c bold)"
+ahead = "[ ${count} ](fg:#523333 bg:#d8712c bold)"
+behind = "[ ${count} ](fg:black bg:#d8712c bold)"
+diverged = "[ ](fg:88 bg:#d8712c)[ נּ ](fg:black bg:#d8712c)[ ${ahead_count} ](fg:black bg:#d8712c)[ ${behind_count} ](fg:black bg:#d8712c bold)"
+
+#[git_state]
+#format = '\([$state( $progress_current/$progress_total)]($style)\) '
+#style = "bright-black"
+[git_state]
+style = "#d8712c"
+format = "\b[ ](bg:$style)[ \\($state( $progress_current/$progress_total)\\)](fg:black bg:$style bold)[](fg:$style)"
+
+[git_branch]
+style = "#d8712c"
+format = "[](fg:black bg:$style)[ $symbol$branch](fg:black bg:$style bold)[](fg:$style)"
+
+[git_commit]
+style = "#d8712c"
+format = "\b[ ](bg:$style)[\\($hash$tag\\)](fg:black bg:$style)[](fg:$style)"
+
+
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+
+[jobs]
+symbol = ' '
+
+
+[memory_usage]
+disabled = false
+threshold = -1
+symbol = ""
+style = "#5f8787"
+format = "([ ❮ ](#767676)[$ram_pct $symbol]($style bold))"
+
+# Python settings
+[python]
+format = "(fg:python)[ ](fg:icon bg:python)(fg:python bg:background)[ $virtualenv ${version}](bg:background)(fg:background) "
+detect_extensions = []
+detect_files = []
+# symbol = "🐍 "
+# style = "yellow bold"
+# python_binary = "python3"
+# pyenv_version_name = true
+
+[sudo]
+disabled = false
+symbol = "🧙"
+format = "[$symbol]($style)"
+
+[time]
+disabled = false
+#style = "#4169e1"
+style = "#d8712c"
+time_format = '%a %h %-e %-l:%M'
+use_12hr = false
+#style = 'bold green'
+#format = "[](bg:$style fg:black)[🕙 $time](bg:$style fg:white)[](fg:$style)"
+format = "[ ❮ ](#767676)[$time]($style bold)"
+
+
+[status]
+disabled = false
+style = "bold red"
+symbol = "❌"
+format = "\b[](bg:$style fg:#4169e1)[$symbol$common_meaning$signal_name](bg:$style)[](fg:$style)"
+
+
+[localip]
+ssh_only = true
+format = '@[$localipv4](bold red) '
+disabled = false
+
+[lua]
+format = 'via [🌕 $version](bold blue) '
+
+[custom.disk-linux]
+description = "Show disk used"
+command = 'df -h --output=avail "$PWD" | tail -n 1'
+style = "#00af5f"
+format = "[ ❮ ](#767676)[$output ]($style bold)"
+when = "true"
+os = "linux"
+
+[custom.loadavg-linux]
+description = "Show load average"
+command = "cat /proc/loadavg | cut -d' ' -f 2"
+style = "#5f8787"
+format = "([ ❮ ](#767676)[$output ]($style bold))"
+when = "true"
+os = "linux"
